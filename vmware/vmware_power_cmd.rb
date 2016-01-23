@@ -4,10 +4,10 @@
 gem('rbvmomi','> 1.6.0')
 %w(trollop rbvmomi rbvmomi/trollop json).each{|f| require f}
 
-#declaration des variables#
+# Environment variables
 USERNAME = ENV["VMWARE_USERNAME"] || "root"
 PASSWORD = ENV["VMWARE_PASSWORD"] || "admin"
-ADDRESS = ENV["VMWARE_ADDRESS"] || "192.168.1.200"
+HOST = ENV["VMWARE_HOST"] || "localhost"
 PORT = ENV["VMWARE_PORT"] || 443
 
 if ARGV.length == 2
@@ -19,7 +19,7 @@ if ARGV.length == 2
 
   #vcenter connection
   VIM = RbVmomi::VIM
-  vim = VIM.connect(:host=>ADDRESS,:port=>PORT,:insecure=>true,:user=>USERNAME,:password=>PASSWORD)
+  vim = VIM.connect(:host=>HOST,:port=>PORT,:insecure=>true,:user=>USERNAME,:password=>PASSWORD)
   dc = vim.serviceInstance.content.rootFolder.traverse("Datacenter", VIM::Datacenter)
 
   folders = dc.vmFolder.children
