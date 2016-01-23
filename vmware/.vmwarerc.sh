@@ -1,0 +1,4 @@
+export VMWARE_USERNAME=root
+export VMWARE_PASSWORD=vmware
+export VMWARE_ADDRESS=192.168.1.200
+export VMWARE_PORT=443
