@@ -24,6 +24,16 @@ finally:
 
 print "\nCluster ID: " + cluster.get_fsid()
 
+print "\nCluster Configuration"
+print "=================="
+try:
+  print "Public Network: " + cluster.conf_get('public network')
+  print "Cluster Network: " + cluster.conf_get('cluster network')
+  print "mon host: " + cluster.conf_get('mon host')
+except Exception as e:
+  print "get configuration error: ", e
+  raise e
+
 print "\nCluster Statistics"
 print "=================="
 cluster_stats = cluster.get_cluster_stats()
