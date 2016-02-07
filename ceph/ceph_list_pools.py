@@ -2,6 +2,8 @@
 
 import rados, sys
 
+# sudo rados lspools
+
 try:
   cluster = rados.Rados(conffile = '/etc/ceph/ceph.conf', conf = dict (keyring = '/etc/ceph/ceph.client.admin.keyring'))
 except TypeError as e:
