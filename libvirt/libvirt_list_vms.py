@@ -3,19 +3,30 @@
 import libvirt
 import sys
 
-conn=libvirt.open("qemu:///system")
-if conn == None:
-    print('Failed to open connection to qemu:///system', sys.stderr)
-    exit(1)
+def getConnection():
+  try:
+    conn=libvirt.open("qemu:///system")
+    return conn
+  except libvirt.libvirtError, e:
+    print e.get_error_message()
+    sys.exit(1)
 
-#vms = conn.listDefinedDomains()
-#print '\n'.join(vms)
-vms = conn.listAllDomains(0)
-if len(vms) != 0:
+def delConnection(conn):
+  try:
+    conn.close()
+  except:
+    print get_error_message()
+    sys.exit(1)
+
+def getAllDomains(conn):
+  vms = conn.listAllDomains(0)
+  if len(vms) != 0:
     for vm in vms:
-        print(vm.name())
-else:
+      print(vm.name())
+  else:
     print('None')
 
-conn.close()
-exit(0)
+if __name__ == '__main__':
+  conn = getConnection()
+  getAllDomains(conn)
+  delConnection(conn)
