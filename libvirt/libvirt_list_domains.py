@@ -1,4 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+
+__author__  = 'weezhard'
+__license__ = 'GPL'
+__version__ = '1.0.0'
 
 import libvirt
 import sys
@@ -26,7 +30,15 @@ def getAllDomains(conn):
   else:
     print('None')
 
+def getAllSecrets(conn):
+  secrets = conn.listAllSecrets()
+  if len(secrets) != 0:
+    for secret in secrets:
+      print secret
+  else:
+    print('None')
+
 if __name__ == '__main__':
   conn = getConnection()
-  getAllDomains(conn)
+  getAllSecrets(conn)
   delConnection(conn)
