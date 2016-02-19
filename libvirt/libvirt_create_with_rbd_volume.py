@@ -12,10 +12,10 @@ import subprocess
 parser = argparse.ArgumentParser()
 parser.add_argument('-d','--domain', help='Domain libvirt', required=True)
 parser.add_argument('-r','--ram', help='Ram', default=2048)
-parser.add_argument('-c','--cpu', help='Number of vCPUs', default=2)
-parser.add_argument('-n','--name', help='Client name ceph', default='client.admin')
-parser.add_argument('-p','--pool',help='Pool ceph', required=True)
-parser.add_argument('-v','--volume',help='Volume ceph', required=True)
+parser.add_argument('-v','--vcpus', help='Number of vCPUs', default=2)
+parser.add_argument('-n','--name', help='Client name ceph', default='client.libvirt')
+parser.add_argument('-p','--pool',help='Pool ceph', default:'libvirt')
+parser.add_argument('-i','--image',help='Image ceph', required=True)
 args = parser.parse_args()
 
 def getConnection():
@@ -88,6 +88,5 @@ if __name__ == '__main__':
   conn = getConnection()
   virtInstall(args.domain, args.ram, args.cpu)
   dom = conn.lookupByName(args.domain)
-  attach_device( dom, getSecretUUID(conn, args.name), args.pool, args.volume, 'vda')
+  attach_device( dom, getSecretUUID(conn, args.name), args.pool, args.image, 'vda')
   delConnection(conn)
-
