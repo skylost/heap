@@ -6,6 +6,7 @@ __version__ = '1.0.0'
 
 import libvirt
 import sys
+import struct
 
 def getConnection():
   try:
@@ -27,14 +28,6 @@ def getAllDomains(conn):
   if len(vms) != 0:
     for vm in vms:
       print(vm.name())
-  else:
-    print('None')
-
-def getAllSecrets(conn):
-  secrets = conn.listAllSecrets()
-  if len(secrets) != 0:
-    for secret in secrets:
-      print secret
   else:
     print('None')
 
