@@ -50,8 +50,8 @@ def getProjects(url, port)
   return JSON.parse(projects)
 end
 
-def deleteProject(project)
-  uri = URI.parse("http://localhost:4440/api/11/project/#{project}")
+def deleteProject(url, port, project)
+  uri = URI.parse("http://#{url}:#{port}/api/11/project/#{project}")
   http = Net::HTTP.new(uri.host, uri.port)
   resp = http.delete(uri.path, @headers)
   puts resp.body
@@ -61,9 +61,9 @@ if __FILE__ == $0
   if options[:all] == true
     projects = getProjects(options[:url], options[:port])
     for project in projects
-      deleteProject(project["name"])
+      deleteProject(options[:url], options[:port], project["name"])
     end
   else
-    deleteProject(options[:project])
+    deleteProject(options[:url], options[:port], options[:project])
   end
 end
